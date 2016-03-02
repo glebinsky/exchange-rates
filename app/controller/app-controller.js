@@ -6,6 +6,11 @@ var AppController = (function() {
     model.getData()
       .then(function(data) {
         console.log(1, data);
+
+        TemplateCache.renderTemplate('rates', data)
+          .then(function(partial) {
+            $(document.body).append(partial);
+          });
       })
       .then(function() {
         return model.getData();
@@ -17,4 +22,4 @@ var AppController = (function() {
 
   return Component;
 
-})(); 
+})();
