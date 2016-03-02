@@ -12,7 +12,7 @@ var TemplateCache = (function() {
   function renderTemplate(tmpl_name, tmpl_data) {
     return new Promise(function(resolve, reject) {
       if (tmpl_cache[tmpl_name]) {
-        resolve(tmpl_cache[tmpl_name](tmpl_data));
+        resolve(getBoundPartial());
 
         return;
       }
@@ -21,9 +21,15 @@ var TemplateCache = (function() {
         .then(function(template) {
           tmpl_cache[tmpl_name] = Handlebars.compile(template);
 
-          resolve(tmpl_cache[tmpl_name](tmpl_data));
+          resolve(getBoundPartial());
         });
     });
+
+    /////////////
+
+    function getBoundPartial() {
+      return tmpl_cache[tmpl_name](tmpl_data || {});
+    }
   }
   
   // http://stackoverflow.com/questions/8366733/external-template-in-underscore
@@ -34,10 +40,11 @@ var TemplateCache = (function() {
 
       $.ajax({
         url: tmpl_url,
-        method: 'GET',
-        success: function(template) {
-          resolve(template);
-        }
+        method: 'GET'
+      }).done(function(template) {
+        resolve(template);
+      }).fail(function() {
+        reject();
       });
     });
  }

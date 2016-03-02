@@ -1,0 +1,16 @@
+<section class="exchange-rates-view">
+  <div class="base">
+    {{base}}
+  </div>
+  <div class="date">
+    {{date}}
+  </div>
+  <ul class="rates">
+    {{#each rates}}
+    <li>
+      <span>{{@key}}</span>
+      <span>{{this}}</span>
+    </li>
+    {{/each}}
+  </ul>
+</section>

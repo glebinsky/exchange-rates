@@ -4,22 +4,24 @@ var AppController = (function() {
   function Component() {
     var model = new DataModel();
     model.getData()
-      .then(function(data) {
-        console.log(1, data);
-
-        TemplateCache.renderTemplate('rates', data)
-          .then(function(partial) {
-            $(document.body).append(partial);
-          });
-      })
       .then(function() {
-        return model.getData();
+        renderView('currency-selector', model.data)
+        renderView('exchange-rate-view', model.data)
       })
-      .then(function(data) {
-        console.log(2, data);
+      .catch(function() {
+        renderView('error');
       });
   }
 
   return Component;
+
+  ///////////
+
+  function renderView(view, data) {
+    TemplateCache.renderTemplate(view, data)
+      .then(function(partial) {
+        $('.main-view').append(partial);
+      });
+  }
 
 })();
