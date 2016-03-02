@@ -12,20 +12,7 @@
   <body>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="app/model/data-model.js"></script>
-    <script>
-      $(function() {
-        var model = new DataModel();
-        model.getData()
-          .then(function(data) {
-            console.log(1, data);
-          })
-          .then(function() {
-            return model.getData();
-          })
-          .then(function(data) {
-            console.log(2, data);
-          });
-      });
-    </script>
+    <script src="app/controller/app-controller.js"></script>
+    <script src="app/app.js"></script>
   </body>
 </html>

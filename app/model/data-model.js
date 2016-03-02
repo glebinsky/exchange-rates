@@ -5,24 +5,22 @@ var DataModel = (function() {
     this._data = data;
   }
 
-  Component.prototype = {
-    getData: function(bustCache) {
-      var self = this;
+  Component.prototype.getData = function(bustCache) {
+    var self = this;
 
-      return new Promise(function(resolve, reject) {
-        if(self._data !== undefined && !bustCache) {
-          console.log('cached');
+    return new Promise(function(resolve, reject) {
+      if(self._data !== undefined && !bustCache) {
+        console.log('cached');
+        resolve(self._data);
+        return;
+      }
+
+      loadData()
+        .then(function(data) {
+          self._data = data;
           resolve(self._data);
-          return;
-        }
-
-        loadData()
-          .then(function(data) {
-            self._data = data;
-            resolve(self._data);
-          });
-      });
-    },
+        });
+    });
   };
 
   return Component;
